@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "KindleNotesConverter.Console": {
+      "commandName": "Project"
+    }
+  }
+}
