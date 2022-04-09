@@ -1,4 +1,6 @@
-﻿namespace KindleNotesConverter.Core.Markdown;
+﻿using KindleNoteConverter.Markdown.Models;
+
+namespace KindleNoteConverter.Markdown.Builders;
 
 public interface IMarkdownBuilder
 {
@@ -8,6 +10,7 @@ public interface IMarkdownBuilder
     IMarkdownBuilder AddTag(string? tag);
     IMarkdownBuilder AddLineBreak();
     IMarkdownBuilder AddDivider();
+    IMarkdownBuilder AddSymbol(string? symbol);
 
     string Build();
 }

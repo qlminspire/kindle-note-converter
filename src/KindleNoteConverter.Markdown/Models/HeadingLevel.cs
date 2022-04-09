@@ -1,4 +1,4 @@
-﻿namespace KindleNotesConverter.Core.Markdown;
+﻿namespace KindleNoteConverter.Markdown.Models;
 
 public enum HeadingLevel
 {

@@ -1,4 +1,4 @@
-﻿namespace KindleNotesConverter.Core;
+﻿namespace KindleNoteConverter.Notebook.Services.Parsers;
 
 internal class KindleClassSelectors
 {

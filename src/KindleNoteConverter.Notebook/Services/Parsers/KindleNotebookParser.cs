@@ -1,7 +1,10 @@
 ﻿using HtmlAgilityPack;
-using KindleNotesConverter.Core.Models;
 
-namespace KindleNotesConverter.Core.Parsers;
+using KindleNoteConverter.Notebook.Models;
+
+using NotebookModel = KindleNoteConverter.Notebook.Models.Notebook;
+
+namespace KindleNoteConverter.Notebook.Services.Parsers;
 
 public class KindleNotebookParser : INotebookParser
 {
@@ -13,7 +16,7 @@ public class KindleNotebookParser : INotebookParser
                 KindleClassSelectors.Notebook.Note.Content
             };
 
-    public KindleNotebook Parse(string notebookPath)
+    public NotebookModel Parse(string notebookPath)
     {
         var doc = new HtmlDocument();
         doc.Load(notebookPath);
@@ -22,7 +25,7 @@ public class KindleNotebookParser : INotebookParser
 
         var documentNodes = documentContent.Where(x => _searchSelectors.Contains(x.Attributes["class"].Value)).ToArray();
 
-        KindleNotebook notebook = new();
+        NotebookModel notebook = new();
 
         ICollection<Chapter> chapters = new List<Chapter>();
 
@@ -31,17 +34,19 @@ public class KindleNotebookParser : INotebookParser
         for (var i = 0; i < documentNodes.Length; i++)
         {
             var node = documentNodes[i];
+            var nodeText = node.InnerText.Trim();
+
             var attribute = node.Attributes["class"].Value;
 
             if (attribute == KindleClassSelectors.Notebook.Title)
-                notebook.Title = node.InnerText.Trim();
+                notebook.Title = nodeText;
             else if (attribute == KindleClassSelectors.Notebook.Author)
-                notebook.Author = node.InnerText.Trim();
+                notebook.Author = nodeText;
             else if (attribute == KindleClassSelectors.Notebook.Chapter)
             {
                 currentChapter = new Chapter()
                 {
-                    Title = documentNodes[i].InnerText.Trim(),
+                    Title = nodeText,
                     Notes = new List<Note>()
                 };
 
@@ -49,7 +54,7 @@ public class KindleNotebookParser : INotebookParser
                     chapters.Add(currentChapter);
             }
             else if (currentChapter?.Notes != null && attribute == KindleClassSelectors.Notebook.Note.Title)
-                currentChapter.Notes.Add(new Note { Title = documentNodes[i].InnerText.Trim(), Content = documentNodes[i + 1].InnerText.Trim() });
+                currentChapter.Notes.Add(new Note { Title = nodeText, Content = documentNodes[i + 1].InnerText.Trim() });
         }
 
         notebook.Chapters = chapters;

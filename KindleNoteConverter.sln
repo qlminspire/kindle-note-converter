@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DC919D7E-D5F7-4CE0-9D87-0EA1EBA49345}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3C630423-C8C6-43A0-A5FF-D0AF058C2772}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KindleNoteConverter.Markdown", "src\KindleNoteConverter.Markdown\KindleNoteConverter.Markdown.csproj", "{277F76E1-D741-4706-AE05-B06DA87CF9DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KindleNoteConverter.Notebook", "src\KindleNoteConverter.Notebook\KindleNoteConverter.Notebook.csproj", "{E0444F0E-F8EA-44C6-8062-5520309788D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KindleNoteConverter.Notebook.Console", "src\KindleNoteConverter.Notebook.Console\KindleNoteConverter.Notebook.Console.csproj", "{94C9087C-032C-4D91-94D8-785F976EF590}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{277F76E1-D741-4706-AE05-B06DA87CF9DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{277F76E1-D741-4706-AE05-B06DA87CF9DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{277F76E1-D741-4706-AE05-B06DA87CF9DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{277F76E1-D741-4706-AE05-B06DA87CF9DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0444F0E-F8EA-44C6-8062-5520309788D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0444F0E-F8EA-44C6-8062-5520309788D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0444F0E-F8EA-44C6-8062-5520309788D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0444F0E-F8EA-44C6-8062-5520309788D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94C9087C-032C-4D91-94D8-785F976EF590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94C9087C-032C-4D91-94D8-785F976EF590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C9087C-032C-4D91-94D8-785F976EF590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94C9087C-032C-4D91-94D8-785F976EF590}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{277F76E1-D741-4706-AE05-B06DA87CF9DA} = {DC919D7E-D5F7-4CE0-9D87-0EA1EBA49345}
+		{E0444F0E-F8EA-44C6-8062-5520309788D1} = {DC919D7E-D5F7-4CE0-9D87-0EA1EBA49345}
+		{94C9087C-032C-4D91-94D8-785F976EF590} = {DC919D7E-D5F7-4CE0-9D87-0EA1EBA49345}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C19191E-AE3A-4F14-A288-26A7BA123FA7}
+	EndGlobalSection
+EndGlobal

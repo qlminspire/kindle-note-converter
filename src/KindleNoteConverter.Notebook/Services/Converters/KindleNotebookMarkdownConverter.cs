@@ -1,10 +1,11 @@
-﻿using KindleNotesConverter.Core.Markdown;
-using KindleNotesConverter.Core.Models;
-using System.Runtime.CompilerServices;
+﻿using KindleNoteConverter.Markdown.Builders;
+using KindleNoteConverter.Markdown.Models;
 
-namespace KindleNotesConverter.Core.Converters;
+using NotebookModel = KindleNoteConverter.Notebook.Models.Notebook;
 
-public class KindleNotebookMarkdownConverter : IMarkdownConverter<KindleNotebook>
+namespace KindleNoteConverter.Notebook.Services.Converters;
+
+public class KindleNotebookMarkdownConverter : IMarkdownConverter<NotebookModel>
 {
     private readonly IMarkdownBuilder _markdownBuilder;
 
@@ -13,18 +14,16 @@ public class KindleNotebookMarkdownConverter : IMarkdownConverter<KindleNotebook
         _markdownBuilder = markdownBuilder;
     }
 
-    public string Convert(KindleNotebook notebook, [CallerArgumentExpression("notebook")] string message = "")
+    public string Convert(NotebookModel notebook)
     {
         if (notebook?.Chapters is null)
-            throw new ArgumentNullException(message);
+            throw new ArgumentNullException(nameof(notebook));
 
- 
+
         foreach (var chapter in notebook.Chapters)
         {
             if (chapter?.Notes is null)
-            {
                 continue;
-            }
 
             _markdownBuilder.AddHeading(HeadingLevel.H4, chapter.Title);
 

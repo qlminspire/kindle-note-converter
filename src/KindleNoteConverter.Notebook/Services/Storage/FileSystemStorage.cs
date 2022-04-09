@@ -1,4 +1,4 @@
-﻿namespace KindleNotesConverter.Core.Storage;
+﻿namespace KindleNoteConverter.Notebook.Services.Storage;
 
 public class FileSystemStorage : IStorage
 {

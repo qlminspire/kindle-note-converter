@@ -1,4 +1,4 @@
-﻿namespace KindleNotesConverter.Core.Models;
+﻿namespace KindleNoteConverter.Notebook.Models;
 
 public class Chapter
 {
