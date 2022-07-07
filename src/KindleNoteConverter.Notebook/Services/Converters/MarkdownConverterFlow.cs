@@ -18,7 +18,7 @@ namespace KindleNoteConverter.Notebook.Services.Converters
             _storage = storage;
         }
 
-        public void Convert(string path, string? outputPath)
+        public void Convert(string path, string outputPath)
         {
             var notebook = _parser.Parse(path);
             var notebookMarkdown = _markdownConverter.Convert(notebook);

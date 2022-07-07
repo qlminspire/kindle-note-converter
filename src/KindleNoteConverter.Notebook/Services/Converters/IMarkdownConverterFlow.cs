@@ -2,5 +2,5 @@
 
 public interface IMarkdownConverterFlow
 {
-    void Convert(string path, string? outputPath);
+    void Convert(string path, string outputPath);
 }
