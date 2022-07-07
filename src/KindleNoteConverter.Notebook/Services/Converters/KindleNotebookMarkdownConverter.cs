@@ -30,8 +30,7 @@ public class KindleNotebookMarkdownConverter : IMarkdownConverter<NotebookModel>
             foreach (var note in chapter.Notes)
             {
                 _markdownBuilder.AddParagraph(note.Location)
-                    .AddCite(note.Content)
-                    .AddDivider();
+                    .AddCite(note.Content);
             }
         }
 
