@@ -5,12 +5,12 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<RootNamespace>KindleNoteConverter.Notebook.Console</RootNamespace>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>disable</Nullable>
+		<Nullable>enable</Nullable>
 
-		<AssemblyName>kindle-note-converter</AssemblyName>
+		<AssemblyName>kindle-notemd</AssemblyName>
 
 		<PackAsTool>true</PackAsTool>
-		<ToolCommandName>kindle</ToolCommandName>
+		<ToolCommandName>kindle-notemd</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
 	</PropertyGroup>
 

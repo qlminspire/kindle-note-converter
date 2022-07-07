@@ -21,7 +21,7 @@ var app = builder.Build();
 
 app.AddCommand((IMarkdownConverterFlow markdownConverterFlow,
    [Option('p', Description = "Path to kindle notebook in HTML format")] string path,
-   [Option('o', Description = "Path to result file in markdown format")] string outputPath) =>
+   [Option('o', Description = "Path to result file in markdown format")]string? outputPath) =>
 {
     markdownConverterFlow.Convert(path, outputPath);
 });
