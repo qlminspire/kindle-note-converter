@@ -1,7 +1,6 @@
 ## Description
 
 Dotnet console utility to convert Kindle notebooks from HTML format to Markdown
-Removes all HTML styles and tags
 
 ## Usage
 
@@ -10,13 +9,13 @@ Removes all HTML styles and tags
 - `-p` or `--path` - path to kindle notebook in HTML format
 - `-o` or `--outputPath` - path to kindle notebook in MD format (optional; if not provided the directory of HTML notebook file will be used)
 
-### How to start: Usage with dotnet-cli
+### Usage with dotnet-cli
 
 ```ps1
 dotnet run -p "Forrest Gump.html"
 ```
 
-### How to start: User as dotnet-tool
+### Usage as dotnet-tool
 
 1. Navigate to KindleNoteConverter.Notebook.Console directory
 2. Pack dotnet nuget package
@@ -34,7 +33,7 @@ dotnet pack
 dotnet tool install --global --add-source ./nupkg kindle-notemd
 ```
 
-##### Usage
+#### Usage
 
 It will be available from any place in console
 

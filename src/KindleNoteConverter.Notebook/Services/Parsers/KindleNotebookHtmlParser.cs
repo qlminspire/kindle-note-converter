@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+
 using NotebookModel = KindleNoteConverter.Notebook.Models.Notebook;
 
 namespace KindleNoteConverter.Notebook.Services.Parsers;
@@ -9,13 +10,15 @@ public sealed class KindleNotebookHtmlParser : INotebookParser
     {
         var htmlDocument = new HtmlDocument();
         htmlDocument.LoadHtml(html);
+
+        const string container = "/html/body/div";
         
-        var bookTitle = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"//html/body/div/h1/div[contains(@class, '{KindleNotebookHtmlClasses.BookTitle}')]")?.InnerText);
-        var bookAuthor = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"//html/body/div/h1/div[contains(@class, '{KindleNotebookHtmlClasses.BookAuthors}')]")?.InnerText);
-        var chapterTitle = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"//html/body/div/h2[contains(@class, '{KindleNotebookHtmlClasses.BookChapterTitle}')]")?.InnerText);
-        var noteLocation = GetNoteLocation(HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"//html/body/div/h3[contains(@class, '{KindleNotebookHtmlClasses.BookNoteLocation}')]")?.InnerText));
+        var bookTitle = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h1/div[@class='{KindleNotebookHtmlClasses.BookTitle}']")?.InnerText);
+        var bookAuthor = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h1/div[@class='{KindleNotebookHtmlClasses.BookAuthors}']")?.InnerText);
+        var chapterTitle = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h2[@class='{KindleNotebookHtmlClasses.BookChapterTitle}']")?.InnerText);
+        var noteLocation = GetNoteLocation(HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h3[@class='{KindleNotebookHtmlClasses.BookNoteLocation}']")?.InnerText));
         
-        var noteContentElements = htmlDocument.DocumentNode.SelectNodes($"//html/body/div[contains(@class, '{KindleNotebookHtmlClasses.BookNoteContent}')]");
+        var noteContentElements = htmlDocument.DocumentNode.SelectNodes($"{container}[@class='{KindleNotebookHtmlClasses.BookNoteContent}']");
         if (noteContentElements is null || noteContentElements.Count == 0)
         {
             // log empty document error
@@ -27,13 +30,12 @@ public sealed class KindleNotebookHtmlParser : INotebookParser
 
         foreach (var noteContentElement in noteContentElements)
         {
-            var noteContentChildElements = noteContentElement.ChildNodes.ToArray();
-            var noteContent = HtmlEntity.DeEntitize(noteContentChildElements[0]?.InnerText);
+            var noteContent = HtmlEntity.DeEntitize(noteContentElement.FirstChild?.InnerText);
 
             notebook.AddNoteToLastChapter(chapterTitle, noteLocation, noteContent);
             
-            noteLocation = GetNoteLocation(HtmlEntity.DeEntitize(noteContentChildElements.FirstOrDefault(x => x.Name == "h3")?.InnerText));
-            chapterTitle = HtmlEntity.DeEntitize(noteContentChildElements.FirstOrDefault(x => x.Name == "h2")?.InnerText);
+            noteLocation = GetNoteLocation(HtmlEntity.DeEntitize(noteContentElement.SelectSingleNode($"./h3[@class='{KindleNotebookHtmlClasses.BookNoteLocation}']")?.InnerText));
+            chapterTitle = HtmlEntity.DeEntitize(noteContentElement.SelectSingleNode($"./h2[@class='{KindleNotebookHtmlClasses.BookChapterTitle}']")?.InnerText);
         }
 
         return notebook;
