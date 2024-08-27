@@ -2,5 +2,5 @@
 
 public interface IStorage
 {
-    void Save(string outputPath, string content);
+    Task Store(string path, string content, CancellationToken cancellationToken = default);
 }

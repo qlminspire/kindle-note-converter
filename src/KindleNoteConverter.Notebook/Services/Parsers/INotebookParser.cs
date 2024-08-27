@@ -4,5 +4,5 @@ namespace KindleNoteConverter.Notebook.Services.Parsers;
 
 public interface INotebookParser
 {
-    NotebookModel Parse(string notebookPath);
+    NotebookModel Parse(string content);
 }
