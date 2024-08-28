@@ -1,9 +1,9 @@
 ﻿namespace KindleNoteConverter.Notebook.Services.Storage;
 
-public class FileSystemStorage : IStorage
+public sealed class FileSystemStorage : IStorage
 {
-    public void Save(string outputPath, string content)
+    public Task Store(string path, string content, CancellationToken cancellationToken = default)
     {
-        File.WriteAllText(outputPath, content);
+        return File.WriteAllTextAsync(path, content, cancellationToken);
     }
 }

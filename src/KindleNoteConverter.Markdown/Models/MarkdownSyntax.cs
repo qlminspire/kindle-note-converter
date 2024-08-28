@@ -8,20 +8,20 @@ public static class MarkdownSyntax
         { HeadingLevel.H2, "##" },
         { HeadingLevel.H3, "###" },
         { HeadingLevel.H4, "####" },
-        { HeadingLevel.H5, "#####" },
+        { HeadingLevel.H5, "#####" }
     };
 
-    public static readonly string Divider = "---";
-    public static readonly string Cite = ">";
-    public static readonly string Tag = "#";
-    public static readonly string ListItem = "- ";
-    public static readonly string TodoItem = "- [ ] ";
-    public static readonly string TodoItemCompleted = "- [x] ";
+    public const string Divider = "---";
+    public const string Cite = ">";
+    public const string Tag = "#";
+    public const string ListItem = "- ";
+    public const string TodoItem = "- [ ] ";
+    public const string TodoItemCompleted = "- [x] ";
 
-    public static readonly string BacklinkTemplate = "[[placeholder]]";
+    public const string BacklinkTemplate = "[[placeholder]]";
 
-    public static readonly string HighlightTemplate = "==placeholder==";
+    public const string HighlightTemplate = "==placeholder==";
 
-    public static readonly string ItalicTemplate = "*placeholder*";
-    public static readonly string BoldTemplate = "**placeholder**";
+    public const string ItalicTemplate = "*placeholder*";
+    public const string BoldTemplate = "**placeholder**";
 }

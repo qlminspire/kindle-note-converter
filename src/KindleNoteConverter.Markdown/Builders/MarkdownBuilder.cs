@@ -4,14 +4,14 @@ using KindleNoteConverter.Markdown.Models;
 
 namespace KindleNoteConverter.Markdown.Builders;
 
-public class MarkdownBuilder : IMarkdownBuilder
+public sealed class MarkdownBuilder : IMarkdownBuilder
 {
     private readonly StringBuilder _content = new();
 
     public IMarkdownBuilder AddCite(string cite)
     {
         if (!string.IsNullOrWhiteSpace(cite))
-            _content.AppendLine($"{MarkdownSyntax.Cite}{cite}");
+            _content.AppendLine($"{MarkdownSyntax.Cite} {cite}");
 
         return this;
     }
@@ -33,7 +33,7 @@ public class MarkdownBuilder : IMarkdownBuilder
 
     public IMarkdownBuilder AddHeading(HeadingLevel headingLevel, string heading)
     {
-        if (!string.IsNullOrWhiteSpace(heading) && MarkdownSyntax.HeadingLevels.TryGetValue(headingLevel, out string level))
+        if (!string.IsNullOrWhiteSpace(heading) && MarkdownSyntax.HeadingLevels.TryGetValue(headingLevel, out var level))
             _content.AppendLine($"{level} {heading}");
 
         return this;
