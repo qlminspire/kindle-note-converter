@@ -40,3 +40,19 @@ It will be available from any place in console
 ```ps1
 kindle-notemd -p "Forrest Gump.html"
 ```
+
+## How to export Kindle notebook
+
+1. Click on "Export" button in "Notes and Highlights"
+
+![Click on "Export" button - explain image](docs/4jZZcmT7ge.png)
+
+2. Click on "Save As" button on opened page with highlights
+
+![Click on "Save As" button - explain image](docs/GyTRSIpDXC.png)
+
+3. Save notebook
+
+![Save notebook - explain image](docs/Qlmgto9Lpv.png)
+
+4. Pass the saved notebook path to convert HTML notebook format to Markdown
