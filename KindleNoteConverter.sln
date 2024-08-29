@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Markdown", "Markdown", "{DB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotebookConverter", "NotebookConverter", "{83B943BF-ED69-4DFB-A13F-6ECD36FD9AF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KindleNoteConverter.Notebook.Tests.Unit", "tests\KindleNoteConverter.Notebook.Tests.Unit\KindleNoteConverter.Notebook.Tests.Unit.csproj", "{2539C6DA-E870-4A6E-887A-46C451FF7CE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{93B6DA9D-2E08-48E2-8EE8-69EFEBF4B86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B6DA9D-2E08-48E2-8EE8-69EFEBF4B86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93B6DA9D-2E08-48E2-8EE8-69EFEBF4B86C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2539C6DA-E870-4A6E-887A-46C451FF7CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2539C6DA-E870-4A6E-887A-46C451FF7CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2539C6DA-E870-4A6E-887A-46C451FF7CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2539C6DA-E870-4A6E-887A-46C451FF7CE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{83B943BF-ED69-4DFB-A13F-6ECD36FD9AF5} = {DC919D7E-D5F7-4CE0-9D87-0EA1EBA49345}
 		{E0444F0E-F8EA-44C6-8062-5520309788D1} = {83B943BF-ED69-4DFB-A13F-6ECD36FD9AF5}
 		{94C9087C-032C-4D91-94D8-785F976EF590} = {83B943BF-ED69-4DFB-A13F-6ECD36FD9AF5}
+		{2539C6DA-E870-4A6E-887A-46C451FF7CE2} = {3C630423-C8C6-43A0-A5FF-D0AF058C2772}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C19191E-AE3A-4F14-A288-26A7BA123FA7}

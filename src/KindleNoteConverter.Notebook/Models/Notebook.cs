@@ -10,15 +10,17 @@ public sealed class Notebook
     
     private Notebook(){}
 
-    public static Notebook Create(string? title, string? author)
+    public static Notebook Create(string? title, string? author, ICollection<Chapter>? chapters = null)
     {
         return new Notebook
         {
             Title = title is not null ? title.RemoveExtraSpacesAndTrim() : title,
             Author = author is not null ? author.RemoveExtraSpacesAndTrim() : author,
-            Chapters = new List<Chapter>()
+            Chapters = chapters ?? new List<Chapter>()
         };
     }
+
+    public bool HasNoChapters => Chapters.Count == 0;
 
     public Result AddChapter(string? title)
     {

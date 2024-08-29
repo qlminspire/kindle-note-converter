@@ -11,7 +11,7 @@ public sealed class Chapter
 
     private Chapter(){}
     
-    public static Result<Chapter> Create(string? title)
+    public static Result<Chapter> Create(string? title, ICollection<Note>? notes = null)
     {
         var trimmedTitle = title?.RemoveExtraSpacesAndTrim();
         if (string.IsNullOrWhiteSpace(trimmedTitle))
@@ -20,7 +20,7 @@ public sealed class Chapter
         return new Chapter
         {
             Title = trimmedTitle,
-            Notes = new List<Note>()
+            Notes = notes ?? new List<Note>()
         };
     }
 

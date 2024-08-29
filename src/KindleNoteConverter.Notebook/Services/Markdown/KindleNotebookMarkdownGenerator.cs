@@ -15,9 +15,8 @@ public sealed class KindleNotebookMarkdownGenerator : IMarkdownGenerator<Noteboo
 
     public string Generate(NotebookModel notebook)
     {
-        if (notebook.Chapters is null)
-            throw new ArgumentNullException(nameof(notebook.Chapters));
-
+        ArgumentNullException.ThrowIfNull(notebook.Chapters);
+  
         foreach (var chapter in notebook.Chapters)
         {
             _markdownBuilder.AddHeading(HeadingLevel.H4, chapter.Title);

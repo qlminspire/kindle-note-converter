@@ -7,10 +7,13 @@ using KindleNoteConverter.Notebook.Services.Storage;
 using KindleNoteConverter.Notebook.Services.Parsers;
 using KindleNoteConverter.Markdown.Builders;
 using KindleNoteConverter.Notebook.Services.Markdown;
+using Microsoft.Extensions.Logging;
 
 using NotebookModel = KindleNoteConverter.Notebook.Models.Notebook;
 
 var builder = CoconaApp.CreateBuilder();
+
+builder.Logging.AddConsole();
 
 builder.Services.AddSingleton<IStorage, FileSystemStorage>();
 builder.Services.AddSingleton<INotebookParser, KindleNotebookHtmlParser>();

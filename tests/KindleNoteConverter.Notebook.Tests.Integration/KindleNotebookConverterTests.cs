@@ -3,19 +3,20 @@ using KindleNoteConverter.Notebook.Services.Converters;
 using KindleNoteConverter.Notebook.Services.Markdown;
 using KindleNoteConverter.Notebook.Services.Parsers;
 using KindleNoteConverter.Notebook.Services.Storage;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace KindleNoteConverter.Notebook.Tests.Integration;
 
 public sealed class KindleNotebookConverterTests
 {
-    private static string ProjectDirectory => Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
-    
-    private static string SourcesPath => Path.Combine(ProjectDirectory, "sources");
-    private static string TargetsPath => Path.Combine(ProjectDirectory, "targets");
+    private static string ProjectDirectoryPath => Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+    private static string SourcesDirectoryPath => Path.Combine(ProjectDirectoryPath, "sources");
+    private static string TargetsDirectoryPath => Path.Combine(ProjectDirectoryPath, "targets");
 
     public KindleNotebookConverterTests()
     {
-        Cleanup();
+        if(Directory.Exists(TargetsDirectoryPath))
+            Directory.Delete(TargetsDirectoryPath, true);
     }
 
     [Fact]
@@ -72,7 +73,6 @@ public sealed class KindleNotebookConverterTests
         await sut.Convert(path, outputPath);
 
         // Assert
-
         var actualMarkdown = await File.ReadAllTextAsync(outputPath);
         
         Assert.Equal(expectedMarkdown, actualMarkdown);
@@ -99,7 +99,6 @@ public sealed class KindleNotebookConverterTests
         await sut.Convert(path, outputPath);
 
         // Assert
-
         var actualMarkdown = await File.ReadAllTextAsync(outputPath);
         
         Assert.Equal(expectedMarkdown, actualMarkdown);
@@ -107,29 +106,44 @@ public sealed class KindleNotebookConverterTests
 
     [Theory]
     [InlineData("Forrest Gump")]
-    [InlineData("Атлант расправил плечи")]
     [InlineData("Колыбель для кошки")]
-    [InlineData("Мужчина без женщины")]
     public async Task Should_Generate_Markdown_File_For_Specified_Notebook(string fileName)
     {
-        await ConvertNotebook(fileName);
-    }
-    
-    private static Task ConvertNotebook(string fileName)
-    {
+        // Arrange
         var sut = CreateKindleNotebookConverter();
         
         var path = GetSourceFilePath(fileName);
         var outputPath = GetOutputFilePath(fileName);
         
-        return sut.Convert(path, outputPath);
+        // Act
+        await sut.Convert(path, outputPath);
+        
+        // Assert
+        Assert.True(File.Exists(outputPath));
+    }
+    
+    [Theory]
+    [InlineData("Атлант расправил плечи")]
+    public async Task Should_NotGenerate_Markdown_File_For_When_Notebook_Empty(string fileName)
+    {
+        // Arrange
+        var sut = CreateKindleNotebookConverter();
+        
+        var path = GetSourceFilePath(fileName);
+        var outputPath = GetOutputFilePath(fileName);
+        
+        // Act
+        await sut.Convert(path, outputPath);
+        
+        // Assert
+        Assert.False(File.Exists(outputPath));
     }
     
     private static string GetSourceFilePath(string fileName) =>
-        Path.Combine(SourcesPath, $"{fileName}.html");
+        Path.Combine(SourcesDirectoryPath, $"{fileName}.html");
 
     private static string GetOutputFilePath(string fileName) =>
-        Path.Combine(TargetsPath, $"{fileName}.md");
+        Path.Combine(TargetsDirectoryPath, $"{fileName}.md");
 
     private static KindleNotebookConverter CreateKindleNotebookConverter()
     {
@@ -140,12 +154,8 @@ public sealed class KindleNotebookConverterTests
 
         var fileSystemStorage = new FileSystemStorage();
 
-        return new KindleNotebookConverter(notebookParser, markdownGenerator, fileSystemStorage);
-    }
-    
-    private static void Cleanup()
-    {
-        if(Directory.Exists(TargetsPath))
-            Directory.Delete(TargetsPath, true);
+        var logger = new NullLogger<KindleNotebookConverter>();
+
+        return new KindleNotebookConverter(notebookParser, markdownGenerator, fileSystemStorage, logger);
     }
 }

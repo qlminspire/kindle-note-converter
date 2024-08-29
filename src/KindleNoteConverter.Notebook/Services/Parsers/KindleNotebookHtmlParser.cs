@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using KindleNoteConverter.Notebook.Extensions;
 
 using NotebookModel = KindleNoteConverter.Notebook.Models.Notebook;
 
@@ -10,32 +11,26 @@ public sealed class KindleNotebookHtmlParser : INotebookParser
     {
         var htmlDocument = new HtmlDocument();
         htmlDocument.LoadHtml(html);
-
-        const string container = "/html/body/div";
         
-        var bookTitle = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h1/div[@class='{KindleNotebookHtmlClasses.BookTitle}']")?.InnerText);
-        var bookAuthor = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h1/div[@class='{KindleNotebookHtmlClasses.BookAuthors}']")?.InnerText);
-        var chapterTitle = HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h2[@class='{KindleNotebookHtmlClasses.BookChapterTitle}']")?.InnerText);
-        var noteLocation = GetNoteLocation(HtmlEntity.DeEntitize(htmlDocument.DocumentNode.SelectSingleNode($"{container}/h3[@class='{KindleNotebookHtmlClasses.BookNoteLocation}']")?.InnerText));
+        var documentNode = htmlDocument.DocumentNode;
         
-        var noteContentElements = htmlDocument.DocumentNode.SelectNodes($"{container}[@class='{KindleNotebookHtmlClasses.BookNoteContent}']");
-        if (noteContentElements is null || noteContentElements.Count == 0)
-        {
-            // log empty document error
-            return NotebookModel.Create(bookTitle, bookAuthor);
-        }
-
+        var bookTitle = documentNode.GetNodeText(KindleNotebookHtml.XPath.BookTitle);
+        var bookAuthor = documentNode.GetNodeText(KindleNotebookHtml.XPath.BookAuthors);
+        var chapterTitle = documentNode.GetNodeText(KindleNotebookHtml.XPath.FirstChapterTitle);
+        var noteLocation = GetNoteLocation(documentNode.GetNodeText(KindleNotebookHtml.XPath.FirstNoteLocation));
+        
         var notebook = NotebookModel.Create(bookTitle, bookAuthor);
         notebook.AddChapter(chapterTitle);
-
+        
+        var noteContentElements = documentNode.SelectNodes(KindleNotebookHtml.XPath.NoteContent)?.ToArray() ?? [];
         foreach (var noteContentElement in noteContentElements)
         {
-            var noteContent = HtmlEntity.DeEntitize(noteContentElement.FirstChild?.InnerText);
+            var noteContent = noteContentElement.GetNodeText(KindleNotebookHtml.XPath.NoteContentText);
 
             notebook.AddNoteToLastChapter(chapterTitle, noteLocation, noteContent);
             
-            noteLocation = GetNoteLocation(HtmlEntity.DeEntitize(noteContentElement.SelectSingleNode($"./h3[@class='{KindleNotebookHtmlClasses.BookNoteLocation}']")?.InnerText));
-            chapterTitle = HtmlEntity.DeEntitize(noteContentElement.SelectSingleNode($"./h2[@class='{KindleNotebookHtmlClasses.BookChapterTitle}']")?.InnerText);
+            noteLocation = GetNoteLocation(noteContentElement.GetNodeText(KindleNotebookHtml.XPath.NoteLocation));
+            chapterTitle = noteContentElement.GetNodeText(KindleNotebookHtml.XPath.ChapterTitle);
         }
 
         return notebook;
@@ -46,14 +41,41 @@ public sealed class KindleNotebookHtmlParser : INotebookParser
         return location?[location.IndexOf("Location", StringComparison.Ordinal)..];
     }
 
-    private static class KindleNotebookHtmlClasses
+    private static class KindleNotebookHtml
     {
-        public const string BookTitle = "bookTitle";
-        public const string BookAuthors = "authors";
+        private static class CssClasses
+        {
+            public const string BookTitle = "bookTitle";
+            public const string BookAuthors = "authors";
         
-        public const string BookChapterTitle = "sectionHeading";
+            public const string ChapterTitle = "sectionHeading";
             
-        public const string BookNoteLocation = "noteHeading";
-        public const string BookNoteContent = "noteText";
+            public const string NoteLocation = "noteHeading";
+            public const string NoteContent = "noteText";
+        }
+
+        internal static class XPath
+        {
+            private const string Container = "/html/body/div";
+
+            public const string BookTitle = $"{Container}/h1/div[@class='{CssClasses.BookTitle}']";
+
+            public const string BookAuthors =
+                $"{Container}/h1/div[@class='{CssClasses.BookAuthors}']";
+
+            public const string FirstChapterTitle =
+                $"{Container}/h2[@class='{CssClasses.ChapterTitle}']";
+
+            public const string ChapterTitle = $"./h2[@class='{CssClasses.ChapterTitle}']";
+            
+            public const string FirstNoteLocation =
+                $"{Container}/h3[@class='{CssClasses.NoteLocation}']";
+
+            public const string NoteLocation = $"./h3[@class='{CssClasses.NoteLocation}']";
+
+            public const string NoteContent = $"{Container}[@class='{CssClasses.NoteContent}']";
+
+            public const string NoteContentText = "./text()";
+        }
     }
 }
