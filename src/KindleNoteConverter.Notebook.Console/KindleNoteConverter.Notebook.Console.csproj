@@ -12,6 +12,8 @@
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>kindle-notemd</ToolCommandName>
 		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PackageIcon>Resources\kindle.png</PackageIcon>
+		<ApplicationIcon>Resources\kindle.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -22,5 +24,9 @@
 		<PackageReference Include="Cocona" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Resources\kindle.png" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 </Project>
